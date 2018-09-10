@@ -10,6 +10,25 @@ Lab 1:
 
 using namespace std;
 
+int calculate_bill()
+{
+  cout << "What was the cost of the food?: $";
+  double food_cost{0};
+  cin >> food_cost;
+
+  cout << "What percent would you like to tip? (whole number): ";
+  double tip_percent{0};
+  cin >> tip_percent;
+
+  const double tax_rate = 0.0825;
+
+  double bill_no_tip = food_cost + (food_cost * tax_rate);
+  // Based tip on bill w/ tax
+  double bill_total = food_cost * (tip_percent / 100) + bill_no_tip;
+
+  cout << bill_total << endl;
+}
+
 int main()
 {
   while (true)
@@ -20,7 +39,7 @@ int main()
 
     if (option == 'a')
     {
-      break;
+      calculate_bill();
     }
     else if (option == 'b')
     {
