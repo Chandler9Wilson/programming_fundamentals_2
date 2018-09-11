@@ -7,6 +7,7 @@ Lab 1:
     * Calculates BMI
     * Quits the loop */
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -26,7 +27,8 @@ int calculate_bill()
   // Based tip on bill w/ tax
   double bill_total = food_cost * (tip_percent / 100) + bill_no_tip;
 
-  cout << bill_total << endl;
+  // Surely there is a better way to do this? taken from pg 113
+  cout << "Your total bill is $" << fixed << showpoint << setprecision(2) << bill_total << endl;
 }
 
 int calculate_bmi()
@@ -40,7 +42,7 @@ int calculate_bmi()
   cin >> height;
 
   double bmi = (weight / (height * height)) * 703;
-  cout << bmi << endl;
+  cout << "Your BMI is: " << fixed << showpoint << setprecision(2) << bmi << endl;
 }
 
 int main()
@@ -48,8 +50,11 @@ int main()
   while (true)
   {
     cout << "Options: a) Amount of restaurant bill; b) BMI; q) Quit: ";
-    char option{' '};
+    char option{'\0'};
+    // Why is it skipping this input when bad input
     cin >> option;
+
+    option = tolower(option);
 
     if (option == 'a')
     {
@@ -65,7 +70,7 @@ int main()
     }
     else
     {
-      cout << option + " Is not a valid option. Try again";
+      cout << option << " Is not a valid option. Try again" << endl;
     }
   }
 }
