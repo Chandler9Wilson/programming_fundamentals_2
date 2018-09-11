@@ -29,6 +29,20 @@ int calculate_bill()
   cout << bill_total << endl;
 }
 
+int calculate_bmi()
+{
+  cout << "What is your weight in pounds?: ";
+  double weight{0};
+  cin >> weight;
+
+  cout << "What is your height in inches?: ";
+  double height{0};
+  cin >> height;
+
+  double bmi = (weight / (height * height)) * 703;
+  cout << bmi << endl;
+}
+
 int main()
 {
   while (true)
@@ -43,7 +57,7 @@ int main()
     }
     else if (option == 'b')
     {
-      break;
+      calculate_bmi();
     }
     else if (option == 'q')
     {
