@@ -13,11 +13,11 @@ using namespace std;
 
 int calculate_bill()
 {
-  cout << "What was the cost of the food?: $";
+  cout << "  What was the cost of the food?: $";
   double food_cost{0};
   cin >> food_cost;
 
-  cout << "What percent would you like to tip? (whole number): ";
+  cout << "  What percent would you like to tip? (e.g. 10 is 10%): ";
   double tip_percent{0};
   cin >> tip_percent;
 
@@ -28,21 +28,21 @@ int calculate_bill()
   double bill_total = food_cost * (tip_percent / 100) + bill_no_tip;
 
   // Surely there is a better way to do this? taken from pg 113
-  cout << "Your total bill is $" << fixed << showpoint << setprecision(2) << bill_total << endl;
+  cout << "  Your total bill is $" << fixed << showpoint << setprecision(2) << bill_total << endl;
 }
 
 int calculate_bmi()
 {
-  cout << "What is your weight in pounds?: ";
+  cout << "  What is your weight in pounds?: ";
   double weight{0};
   cin >> weight;
 
-  cout << "What is your height in inches?: ";
+  cout << "  What is your height in inches?: ";
   double height{0};
   cin >> height;
 
   double bmi = (weight / (height * height)) * 703;
-  cout << "Your BMI is: " << fixed << showpoint << setprecision(2) << bmi << endl;
+  cout << "  Your BMI is: " << fixed << showpoint << setprecision(2) << bmi << endl;
 }
 
 int main()
@@ -51,7 +51,7 @@ int main()
   {
     cout << "Options: a) Amount of restaurant bill; b) BMI; q) Quit: ";
     char option{'\0'};
-    // Why is it skipping this input when bad input
+
     cin >> option;
 
     option = tolower(option);
@@ -74,3 +74,24 @@ int main()
     }
   }
 }
+
+/* Test output:
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: a
+  What was the cost of the food?: $10.00
+  What percent would you like to tip? (e.g. 10 is 10%): 10
+  Your total bill is $11.82
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: b
+  What is your weight in pounds?: 150
+  What is your height in inches?: 60
+  Your BMI is: 29.29
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: j
+j Is not a valid option. Try again
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: jfk
+j Is not a valid option. Try again
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: f Is not a valid option. Try again
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: k Is not a valid option. Try again
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: A
+  What was the cost of the food?: $10
+  What percent would you like to tip? (e.g. 10 is 10%): 10
+  Your total bill is $11.82
+Options: a) Amount of restaurant bill; b) BMI; q) Quit: q */
