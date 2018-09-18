@@ -23,11 +23,12 @@ public:
     rows = r;
   };
 
-  string diamond_str();
+  string to_string();
 };
 
 int main()
 {
+  // cout << sizeof(unsigned char);
   while (true)
   {
     cout << "Enter number of rows in diamond (0 to quit): ";
@@ -51,7 +52,7 @@ int main()
     {
       // cout << user_number << " is a valid <int>" << endl;
       Diamond user_diamond(user_number);
-      user_diamond.diamond_str();
+      user_diamond.to_string();
     }
     else
     {
@@ -72,14 +73,15 @@ int sanitize_input(string input)
   {
     cout << input << " is not a natural number. Try again" << endl;
 
-    // Is returning 0 here counterintuitive to how most programs exit with 0 if successful?
-    return -1;
+    // returns a failure state of -1
+    return converted_input;
   }
   catch (out_of_range e)
   {
     cout << input << " is too big. Try again" << endl;
 
-    return -1;
+    // returns a failure state of -1
+    return converted_input;
   }
 
   // catch negative numbers
@@ -93,7 +95,7 @@ int sanitize_input(string input)
   return converted_input;
 }
 
-string Diamond::diamond_str()
+string Diamond::to_string()
 {
   int center_point = (rows / 2) + 1;
   string end_diamond{"\0"};
