@@ -10,8 +10,21 @@ Lab 2:
 using namespace std;
 
 // Function prototype per books suggestion see pg 334
-void construct_diamond(int rows);
 int sanitize_input(string input);
+
+class Diamond
+{
+private:
+  int rows;
+
+public:
+  Diamond(int r = 7)
+  {
+    rows = r;
+  };
+
+  string diamond_str();
+};
 
 int main()
 {
@@ -36,18 +49,15 @@ int main()
     }
     else if (user_number)
     {
-      cout << user_number << " is a valid <int>" << endl;
+      // cout << user_number << " is a valid <int>" << endl;
+      Diamond user_diamond(user_number);
+      user_diamond.diamond_str();
     }
     else
     {
       cout << user_input << " is not a valid number of rows. Try again" << endl;
     }
   }
-}
-
-void construct_diamond(int row)
-{
-  cout << "A Diamond I swear" << endl;
 }
 
 int sanitize_input(string input)
@@ -81,4 +91,24 @@ int sanitize_input(string input)
   }
 
   return converted_input;
+}
+
+string Diamond::diamond_str()
+{
+  int center_point = (rows / 2) + 1;
+  string end_diamond{"\0"};
+
+  // cout << "center point is: " << center_point << endl;
+
+  for (int i = 1; i <= rows; i++)
+  {
+    int space_count = abs(center_point - i);
+    // cout << "space_count is : " << space_count << endl;
+    int star_count = rows - (space_count * 2);
+    // cout << "star_count is : " << star_count << endl;
+
+    end_diamond += (string(space_count, ' ') + string(star_count, '*') + "\n");
+  }
+
+  cout << end_diamond;
 }
