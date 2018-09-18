@@ -17,7 +17,11 @@ class Diamond
 private:
   int rows;
 
+  string even_to_string();
+  string odd_to_string();
+
 public:
+  // init constructor
   Diamond(int r = 7)
   {
     rows = r;
@@ -26,6 +30,7 @@ public:
   string to_string();
 };
 
+// main here after prototypes, or at the end of the file?
 int main()
 {
   // cout << sizeof(unsigned char);
@@ -52,7 +57,7 @@ int main()
     {
       // cout << user_number << " is a valid <int>" << endl;
       Diamond user_diamond(user_number);
-      user_diamond.to_string();
+      cout << user_diamond.to_string();
     }
     else
     {
@@ -95,8 +100,15 @@ int sanitize_input(string input)
   return converted_input;
 }
 
-string Diamond::to_string()
+string Diamond::even_to_string()
 {
+  cout << "This is an even diamond \n";
+}
+
+string Diamond::odd_to_string()
+{
+  cout << "This is an odd diamond \n";
+
   int center_point = (rows / 2) + 1;
   string end_diamond{"\0"};
 
@@ -112,5 +124,18 @@ string Diamond::to_string()
     end_diamond += (string(space_count, ' ') + string(star_count, '*') + "\n");
   }
 
-  cout << end_diamond;
+  return end_diamond;
+}
+
+string Diamond::to_string()
+{
+  // if even
+  if (!(rows % 2))
+  {
+    return even_to_string();
+  }
+  else
+  {
+    return odd_to_string();
+  }
 }
