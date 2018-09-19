@@ -33,7 +33,6 @@ public:
 // main here after prototypes, or at the end of the file?
 int main()
 {
-  // cout << sizeof(unsigned char);
   while (true)
   {
     cout << "Enter number of rows in diamond (0 to quit): ";
@@ -55,7 +54,6 @@ int main()
     }
     else if (user_number)
     {
-      // cout << user_number << " is a valid <int>" << endl;
       Diamond user_diamond(user_number);
       cout << user_diamond.to_string();
     }
@@ -100,26 +98,26 @@ int sanitize_input(string input)
   return converted_input;
 }
 
+// Generate diamonds with an even number of rows
 string Diamond::even_to_string()
 {
-  cout << "This is an even diamond \n";
+  // makes even numbers odd (not the best solution i know)
+  rows -= 1;
+
+  return odd_to_string();
 }
 
+// Generate diamonds with an odd number of rows
 string Diamond::odd_to_string()
 {
-  cout << "This is an odd diamond \n";
-
-  int center_point = (rows / 2) + 1;
+  // odd mean
+  int center_point = ((rows + 1) / 2);
   string end_diamond{"\0"};
-
-  // cout << "center point is: " << center_point << endl;
 
   for (int i = 1; i <= rows; i++)
   {
     int space_count = abs(center_point - i);
-    // cout << "space_count is : " << space_count << endl;
     int star_count = rows - (space_count * 2);
-    // cout << "star_count is : " << star_count << endl;
 
     end_diamond += (string(space_count, ' ') + string(star_count, '*') + "\n");
   }
