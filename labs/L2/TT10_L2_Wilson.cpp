@@ -137,3 +137,32 @@ string Diamond::to_string()
     return odd_to_string();
   }
 }
+
+/* Test output:
+Enter number of rows in diamond (0 to quit): abcd
+abcd is not a natural number. Try again
+Enter number of rows in diamond (0 to quit): 13223132321233223132123
+13223132321233223132123 is too big. Try again
+Enter number of rows in diamond (0 to quit): 3
+ *
+***
+ *
+Enter number of rows in diamond (0 to quit): 7
+   *
+  ***
+ *****
+*******
+ *****
+  ***
+   *
+Enter number of rows in diamond (0 to quit): 7.2
+   *
+  ***
+ *****
+*******
+ *****
+  ***
+   *
+Enter number of rows in diamond (0 to quit): 0
+
+Goodbye! */
