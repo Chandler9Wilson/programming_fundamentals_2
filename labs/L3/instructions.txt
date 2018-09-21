@@ -1,0 +1,15 @@
+This lab is based on Math Tutor, programming challenge 16 in Chapter 3, page 154 (7ed), page 152 (8ed, 9ed). The program variations are:
+
+1) Write code for a 3rd Grade math tutor program that provides simple addition questions. Use only numbers in the range 0 to 100 inclusive in the math problems. No number should exceed 100 in the questions or answers. Ask the student for how many questions to generate and provide that many questions. See chapter 3, pgs 128-130 (7ed), 133-136(8ed, 9ed) for code on how to generate random numbers. See chapter 5, top of page 267 (7ed), page 270 (8ed), page 271 (9ed) for code that will loop. Test this. (14 points)
+
+2) Instead of asking for a number of questions, keep generating questions until the answer given is a sentinel value which ends the quiz. A negative number is a good sentinel because all valid answers are from 0 to 100. Do not ask: "Do you want another question? (y/n)" after each answer. This makes the quiz tedious for the user. Instead, provide a sentinel to quit. The quiz quits when the sentinel is entered. (16 points).
+
+3) Ask the user for a number of questions as in variation 1, but also allow the user to stop early as in variation 2.  This provides more flexibility.  The quiz quits when the total number of questions requested have been presented OR the sentinel was entered. (18 points)
+
+4) Provide a score at the end: number correct, number wrong, and percentage correct. CAUTION! Avoid divide by 0 if no questions are answered! (2 points extra).
+
+Extra credit: Generate addition, subtraction, multiplication, and division questions. Provide statistics on how the student did on each operation. Advise whether more study is recommended. Be very careful attempting this extra credit. It is much more difficult to generate valid values for all 4 operations. Your program can crash if you allow divide be zero. (22 - 24 points max).
+
+Submit one program file: DDHH_L3_Lastname.cpp. Provide a header comment block; paste output at bottom. (Recall that DDHH stands for DayDayHourHour of your course.)
+
+IMPORTANT! All numbers involved in the math problems should be in the range 0 - 100. This includes numbers for questions and answers. For example, if attempting the extra credit: 81 / 9 is a valid question, but 56 / 13 is not, because the answer is a weird fraction – not suitable for a 3rd grader. 21 * 4 is a valid question, but 21 * 57 is not. The answers should be in the range of 0 - 100. Test your code with 5 questions and answers minimum.
