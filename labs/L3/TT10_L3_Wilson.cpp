@@ -248,3 +248,28 @@ int main()
     problem_loop(number_of_problems);
   }
 }
+
+/* Test Output:
+How many problems would you like? (-1 to quit at anytime): 10
+36 - 11 = 25
+Correct!
+41 + 3 = 44
+Correct!
+81 + 12 = asd
+You answered incorrectly. The correct answer is 93
+65 + 9 = -5
+You answered incorrectly. The correct answer is 74
+36 + 33 = 69
+Correct!
+8 + 44 = 123
+You answered incorrectly. The correct answer is 52
+45 - 17 = 23
+You answered incorrectly. The correct answer is 28
+93 - 27 = 123
+You answered incorrectly. The correct answer is 66
+38 - 26 = 123
+You answered incorrectly. The correct answer is 12
+56 - 1 = 55
+Correct!
+You answered 4 questions correctly and 6 incorrectly. That is 40% correct.
+Goodbye! */
