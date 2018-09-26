@@ -1,0 +1,22 @@
+This lab is based on Chapter 4, "The Speed of Sound". This is programming challenge 16, page 239 (7ed & 8ed), or programming challenge 18, page 241 (9ed).
+
+1) Write a program as described, but include a loop so the user can perform as many calculations as desired. Present a menu of options; prompt for: a)ir, w)water, s)teel and q)uit. For ease of use, provide an option to quit gracefully at any time. Accept the first letter of each material as input, then ask for the distance. Display the time it takes for sound to travel that distance (in seconds). Test your loop on multiple options in a single run. Reject invalid data. From the textbook: "Input validation: Decide how the program should handle an illegal input for the menu choice or a negative value for the distance." If the user enters an invalid option, display an error message and ask again. Do not accept distances less than 0. If the user enters an invalid distance (less than 0) display an error message and ask for the distance again. (max 16 points).
+
+2) For processing the different material options, use a switch statement instead of if else if else if else. Use the default for invalid material option input. For the switch statement, see pages 210 -215 (7ed & 8ed), pages 213-220 (9ed). (max 18 points)
+
+3) Make an enumerated type to designate the options. See page 219 (7ed & 8ed), pages 222-223 (9ed). Example: enum material {air, water, steel};. This will set air=0; water=1; steel=2, which can be used for options. Or try: enum material {air='a', water='w', steel='s', quit='q'}; and use the type-name letter defaults as options. By using an enum type, you can avoid using "magic numbers" like 0, 1, 2. (max 20 points)
+
+Extra credit: Read material data from a file. Read the table from a file containing the following text:
+Medium   Speed
+Air           1100
+Water      4900
+Steel      16400
+
+This file can be created with copy/paste: copy the 4 lines above, and paste them into a new text file called: DDHH_L4_Lastname_In.txt. Modify DDHH as needed. DDHH is the course DayDayHourHour designator, for example: TT10, MW16, TT17, DL5, etc. To see some working sample code which does almost exactly what you need to read data from a file, see: "Program Samples", Simple FileIO. This provides a complete, working FileIO example. If reading from your own data file, submit both the code and the data file. Because the material type names (in the file) cannot be known in advance, this option means you cannot use an enum.  (max 22 points).
+
+For a bigger challenge, handle the case where more materials are added to the data file, such as:
+Copper    7500
+Nylon      1150
+Iron         8200
+
+If reading from a file, your CANNOT assume you know the contents of the data file in advance. You may assume that each material begins with a different letter. Do not "hard code" the prompt or the material or the speed in the program code. Instead, read the data from the materials file first. Create a prompt that displays each material like above. You cannot use switch or enum as before, because the option letters are not known in advance. Handle up to 6 materials. This is easier to do with arrays (Chapter 8) but can be done without arrays. (max 24 points).
