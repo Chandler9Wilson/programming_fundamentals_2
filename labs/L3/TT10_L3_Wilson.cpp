@@ -8,6 +8,7 @@ Lab 3:
     * Keep track of question stats*/
 #include <iostream>
 #include <string>
+#include <stdexcept>
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
