@@ -119,7 +119,6 @@ public:
 
       if (correct_answer() >= 0 and correct_answer() <= 100)
       {
-        cout << "The correct answer is " << correct_answer() << endl;
         valid_problem = true;
       }
     }
@@ -137,15 +136,11 @@ int sanitize_input(string input)
   }
   catch (invalid_argument e)
   {
-    cout << input << " is not a natural number. Try again" << endl;
-
     // returns a failure state of -2
     return converted_input;
   }
   catch (out_of_range e)
   {
-    cout << input << " is too big. Try again" << endl;
-
     // returns a failure state of -2
     return converted_input;
   }
@@ -153,8 +148,6 @@ int sanitize_input(string input)
   // catch negative numbers not -1
   if (converted_input < -1)
   {
-    cout << input << " is not a natural number. Try again" << endl;
-
     return -2;
   }
 
@@ -167,6 +160,9 @@ void problem_loop(int number_of_problems)
   Problem user_problem;
   string user_input{"\0"};
   int user_number{0};
+  //stat keeping numbers
+  int correct_answers{0};
+  int incorrect_answers{0};
 
   for (int i = 1; i <= number_of_problems; i++)
   {
@@ -182,12 +178,30 @@ void problem_loop(int number_of_problems)
     {
       cout << endl
            << "Goodbye!" << endl;
-      break;
+      return;
     }
     else if (user_number == -2)
     {
+      incorrect_answers++;
+      cout << "You answered incorrectly. The correct answer is " << user_problem.correct_answer() << endl;
+    }
+    else if (user_number == user_problem.correct_answer())
+    {
+      correct_answers++;
+      cout << "Correct!" << endl;
+    }
+    else
+    {
+      incorrect_answers++;
+      cout << "You answered incorrectly. The correct answer is " << user_problem.correct_answer() << endl;
     }
   }
+
+  // display stats
+  cout << "You answered " << correct_answers << " questions correctly and " << incorrect_answers
+       << " incorrectly. That is " << ((correct_answers * 100) / incorrect_answers)
+       << "% correct." << endl
+       << "Goodbye!" << endl;
 }
 
 // one time collection
@@ -208,8 +222,9 @@ int collect_number_of_problems()
            << "Goodbye!" << endl;
       return 0;
     }
-    else if (user_number < 0)
+    else if (user_number < -1)
     {
+      cout << user_input << " is not a natural number. Try again" << endl;
       continue;
     }
     else if (user_number)
