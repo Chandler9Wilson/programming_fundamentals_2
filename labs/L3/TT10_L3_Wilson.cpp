@@ -200,7 +200,7 @@ void problem_loop(int number_of_problems)
 
   // display stats
   cout << "You answered " << correct_answers << " questions correctly and " << incorrect_answers
-       << " incorrectly. That is " << ((correct_answers * 100) / incorrect_answers)
+       << " incorrectly. That is " << ((correct_answers * 100) / (correct_answers + incorrect_answers))
        << "% correct." << endl
        << "Goodbye!" << endl;
 }
@@ -237,7 +237,7 @@ int collect_number_of_problems()
       cout << user_input << " is not a valid number of questions. Try again" << endl;
     }
   }
-};
+}
 
 int main()
 {
