@@ -1,0 +1,7 @@
+Medium   Speed
+Copper    7500
+Nylon     1150
+Iron      8200
+Platinum  7500
+Gold      1150
+Silver    8200
