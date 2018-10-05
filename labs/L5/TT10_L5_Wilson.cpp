@@ -2,8 +2,7 @@
 Course: COSC 1337 Fall 2018
 Instructor: Thayer
 Lab 5:
-  1. Open user specified file
-  2. Graph the file and exit*/
+  1. Graph a population file*/
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -26,6 +25,7 @@ bool attempt_open(string file_to_open)
   }
 }
 
+// prints out a bar chart from a population file
 void graph_population(string file_to_graph)
 {
   string graph_title = "Coleman County Population Growth";
@@ -34,9 +34,12 @@ void graph_population(string file_to_graph)
 
   ifstream inFile(file_to_graph);
 
+  cout << graph_title << endl
+       << graph_legend << endl;
+
   while (!inFile.eof())
   {
-    string population;
+    int population{0};
     inFile >> population;
 
     // break if eof before printing out
@@ -44,7 +47,9 @@ void graph_population(string file_to_graph)
     {
       break;
     }
-    cout << year << " " << population << endl;
+
+    int number_of_stars = population / 1000;
+    cout << year << " " << string(number_of_stars, '*') << endl;
 
     year += 20;
   }
@@ -57,7 +62,6 @@ int main()
 
   if (file_opened)
   {
-    cout << "opened ok" << endl;
     graph_population(file_name);
   }
   else
@@ -65,3 +69,31 @@ int main()
     cout << "There was a problem opening " << file_name << endl;
   }
 }
+
+/* Test Output:
+
+Given File:
+Coleman County Population Growth
+(each * represents 1000 people)
+1900 **
+1920 ****
+1940 *****
+1960 *********
+1980 **************
+2000 ******************
+Extra poulations:
+Coleman County Population Growth
+(each * represents 1000 people)
+1900 **
+1920 ****
+1940 *****
+1960 *********
+1980 **************
+2000 ******************
+2020 *
+2040 *****
+2060 *********
+2080 **************
+File not found:
+There was a problem opening peopple.txt
+*/
