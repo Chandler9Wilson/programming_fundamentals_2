@@ -2,12 +2,12 @@
 Course: COSC 1337 Fall 2018
 Instructor: Thayer
 Lab 6:
-  1. Use functions
-  2. Use function overloading
-  3. Use pass-by-value and pass-by-reference
+  X 1. Use functions
+  X 2. Use function overloading
+  X 3. Use pass-by-value and pass-by-reference
   4. Use static local variables
   5. Use default parameters
-  6. Use const parameters*/
+  X 6. Use const parameters*/
 #include <iostream>
 #include <string>
 
@@ -45,4 +45,38 @@ int main()
   // Greeting message
   cout << "Display the distance between two items: letters, numbers, or points." << endl
        << endl;
+
+  while (true)
+  {
+    cout << "Options: l)etter; n)umber; p)oint; q)uit: ";
+    char option{'\0'};
+
+    cin >> option;
+
+    option = tolower(option);
+
+    if (!isalpha(option))
+    {
+      cout << "Please enter a letter" << endl;
+
+      continue;
+    }
+    else if (option == 'l')
+    {
+    }
+    else if (option == 'n')
+    {
+    }
+    else if (option == 'p')
+    {
+    }
+    else if (option == 'q')
+    {
+      break;
+    }
+    else
+    {
+      cout << option << " Is not a valid option. Try again" << endl;
+    }
+  }
 }
