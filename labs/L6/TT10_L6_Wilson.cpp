@@ -46,6 +46,28 @@ char input(const string prompt, const string error_message)
 // Gets a number and returns a number
 double input(const double min_number, const double max_number, const string prompt, const string error_message)
 {
+  while (true)
+  {
+    cout << prompt;
+
+    double user_number{0.0};
+
+    if (cin >> user_number)
+    {
+      if (user_number >= min_number and user_number <= max_number)
+      {
+        return user_number;
+      }
+    }
+    else
+    {
+      cout << error_message << endl;
+
+      cin.clear();
+      cin.ignore(10000, '\n');
+      continue;
+    }
+  }
 }
 
 // Gets one point and sets via reference
@@ -54,6 +76,7 @@ void input(double &x, double &y, const string prompt) {}
 // Returns the distance between two letters in the alphabet
 int distance_between(char first_letter, char second_letter)
 {
+  // forces the char into an int aka gets the ascii code
   int first_ascii = tolower(first_letter);
   int second_ascii = tolower(second_letter);
 
@@ -63,10 +86,17 @@ int distance_between(char first_letter, char second_letter)
 }
 
 // Returns the distance between two numbers
-double distance_between(double first_number, double second_number) {}
+double distance_between(double first_number, double second_number)
+{
+  double distance = abs(first_number - second_number);
+
+  return distance;
+}
 
 // Returns the distance between two points on a cartesian plane
-double distance_between(double first_point_x, double first_point_y, double second_point_x, double second_point_y) {}
+double distance_between(double first_point_x, double first_point_y, double second_point_x, double second_point_y)
+{
+}
 
 // Display two letters and the distance between
 void display(const string &message, char first_letter, char second_letter)
@@ -78,7 +108,12 @@ void display(const string &message, char first_letter, char second_letter)
 // Use static local variable to keep count of how many times called
 
 // Display two numbers and the distance between
-void display(const string &message, double first_number, double second_number) {}
+void display(const string &message, double first_number, double second_number)
+{
+  double distance = distance_between(first_number, second_number);
+
+  cout << message << first_number << " and " << second_number << " is " << distance << endl;
+}
 // Use static local variable to keep count of how many times called
 
 // Display two points and the distance between
@@ -120,6 +155,17 @@ int main()
     }
     else if (option == 'n')
     {
+      int min_number = -100;
+      int max_number = 100;
+      string first_number_prompt = " Please enter the first number: ";
+      string second_number_prompt = " Please enter the second number: ";
+      string error_message = " Error: Please enter a number between -100 and 100";
+      string display_message = " The distance between numbers ";
+
+      double first_number = input(min_number, max_number, first_number_prompt, error_message);
+      double second_number = input(min_number, max_number, second_number_prompt, error_message);
+
+      display(display_message, first_number, second_number);
     }
     else if (option == 'p')
     {
