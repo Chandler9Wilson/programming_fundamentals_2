@@ -44,7 +44,7 @@ char input(const string prompt, const string error_message)
 }
 
 // Gets a number and returns a number
-double input(const double min_number, const double max_number, const string prompt, const string error_message)
+double input(const string prompt, const string error_message, const double min_number, const double max_number)
 {
   while (true)
   {
@@ -71,7 +71,17 @@ double input(const double min_number, const double max_number, const string prom
 }
 
 // Gets one point and sets via reference
-void input(double &x, double &y, const string prompt) {}
+void input(double &x, double &y, const string prompt)
+{
+  int min_number = -100;
+  int max_number = 100;
+  string x_prompt = prompt + "(x): ";
+  string y_prompt = prompt + "(y): ";
+  string error_message = "Error: Please enter a number between -100 and 100";
+
+  x = input(x_prompt, error_message, min_number, max_number);
+  y = input(y_prompt, error_message, min_number, max_number);
+}
 
 // Returns the distance between two letters in the alphabet
 int distance_between(char first_letter, char second_letter)
@@ -96,28 +106,50 @@ double distance_between(double first_number, double second_number)
 // Returns the distance between two points on a cartesian plane
 double distance_between(double first_point_x, double first_point_y, double second_point_x, double second_point_y)
 {
+  // Equation for finding the distance between two points
+  double distance = sqrt(pow((first_point_x - second_point_x), 2) + pow((first_point_y - second_point_y), 2));
+
+  return distance;
 }
 
 // Display two letters and the distance between
 void display(const string &message, char first_letter, char second_letter)
 {
+  static int call_count = 0;
+  ++call_count;
+
   int distance = distance_between(first_letter, second_letter);
 
-  cout << message << first_letter << " and " << second_letter << " is " << distance << endl;
+  cout << "  (#" << call_count << ") " << message << first_letter << " and "
+       << second_letter << " is " << distance << endl;
 }
 // Use static local variable to keep count of how many times called
 
 // Display two numbers and the distance between
 void display(const string &message, double first_number, double second_number)
 {
+  static int call_count = 0;
+  ++call_count;
+
   double distance = distance_between(first_number, second_number);
 
-  cout << message << first_number << " and " << second_number << " is " << distance << endl;
+  cout << "  (#" << call_count << ") " << message << first_number << " and "
+       << second_number << " is " << distance << endl;
 }
 // Use static local variable to keep count of how many times called
 
 // Display two points and the distance between
-void display(const string &message, double first_point_x, double first_point_y, double second_point_x, double second_point_y) {}
+void display(const string &message, double first_point_x, double first_point_y, double second_point_x, double second_point_y)
+{
+  static int call_count = 0;
+  ++call_count;
+
+  double distance = distance_between(first_point_x, first_point_y, second_point_x, second_point_y);
+
+  cout << "  (#" << call_count << ") " << message << "(" << first_point_x << ", "
+       << first_point_y << ") and (" << second_point_x << ", " << second_point_y
+       << ") is " << distance << endl;
+}
 // Use static local variable to keep count of how many times called
 
 int main()
@@ -146,7 +178,7 @@ int main()
       string first_letter_prompt = "  Please enter the first letter: ";
       string second_letter_prompt = "  Please enter the second letter: ";
       string error_message = "  Error: Please enter a single alphabetic character";
-      string display_message = "  The distance between letters ";
+      string display_message = "The distance between letters ";
 
       char first_letter = input(first_letter_prompt, error_message);
       char second_letter = input(second_letter_prompt, error_message);
@@ -160,15 +192,27 @@ int main()
       string first_number_prompt = " Please enter the first number: ";
       string second_number_prompt = " Please enter the second number: ";
       string error_message = " Error: Please enter a number between -100 and 100";
-      string display_message = " The distance between numbers ";
+      string display_message = "The distance between numbers ";
 
-      double first_number = input(min_number, max_number, first_number_prompt, error_message);
-      double second_number = input(min_number, max_number, second_number_prompt, error_message);
+      double first_number = input(first_number_prompt, error_message, min_number, max_number);
+      double second_number = input(second_number_prompt, error_message, min_number, max_number);
 
       display(display_message, first_number, second_number);
     }
     else if (option == 'p')
     {
+      double first_point_x{0};
+      double first_point_y{0};
+      double second_point_x{0};
+      double second_point_y{0};
+      string first_point_prompt = "  Enter the first point ";
+      string second_point_prompt = "  Enter the second point ";
+      string display_message = "Straight line distance between points ";
+
+      input(first_point_x, first_point_y, first_point_prompt);
+      input(second_point_x, second_point_y, second_point_prompt);
+
+      display(display_message, first_point_x, first_point_y, second_point_x, second_point_y);
     }
     else if (option == 'q')
     {
@@ -182,3 +226,32 @@ int main()
     }
   }
 }
+
+/* Test Output:
+Display the distance between two items: letters, numbers, or points.
+
+Options: l)etter; n)umber; p)oint; q)uit: l
+  Please enter the first letter: a
+  Please enter the second letter: b
+  (#1) The distance between letters a and b is 1
+Options: l)etter; n)umber; p)oint; q)uit: l
+  Please enter the first letter: A
+  Please enter the second letter: d
+  (#2) The distance between letters a and d is 3
+Options: l)etter; n)umber; p)oint; q)uit: n
+ Please enter the first number: -5.5
+ Please enter the second number: 20.5
+  (#1) The distance between numbers -5.5 and 20.5 is 26
+Options: l)etter; n)umber; p)oint; q)uit: n
+ Please enter the first number: 10
+ Please enter the second number: 50
+  (#2) The distance between numbers 10 and 50 is 40
+Options: l)etter; n)umber; p)oint; q)uit: P
+  Enter the first point (x): 0
+  Enter the first point (y): 0
+  Enter the second point (x): 1
+  Enter the second point (y): 1
+  (#1) Straight line distance between points (0, 0) and (1, 1) is 1.41421
+Options: l)etter; n)umber; p)oint; q)uit: q
+
+Goodbye! */
