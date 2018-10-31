@@ -163,3 +163,19 @@ int main()
 
   cout << "The total value of the inventory is $" << total_cost << endl;
 }
+
+/* Testing:
+How many items would you like in your inventory? (1-5): 3
+Item number 1
+  description: I am a generic item
+  quantity: 2
+  cost: $10
+Item number 2
+  description: I am a generic item
+  quantity: 2
+  cost: $10
+Item number 3
+  description: I am a generic item
+  quantity: 2
+  cost: $10
+The total value of the inventory is $60 */
