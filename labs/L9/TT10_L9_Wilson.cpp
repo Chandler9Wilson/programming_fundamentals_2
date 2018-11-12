@@ -1,5 +1,6 @@
 // Author:                      Chandler Wilson
 // Assignment Number:           Lab 9
+// File Name:                   TT10_L9_Wilson.cpp
 // Course/Section:              COSC 1337 Fall 2018
 // Due Date:                    11/13/18
 // Instructor:                  Thayer
@@ -245,6 +246,38 @@ bool linearSearchArray(int a[], int s, int t, int &p)
     }
   p = -1;
   return false;
+}
+
+int binary_search(const int array[], int size_of_array, int searching_for)
+{
+  int first{0},
+      last = size_of_array - 1,
+      middle,
+      position{-1};
+  bool found = false;
+
+  while (not found and first <= last)
+  {
+    middle = (first + last) / 2;
+
+    if (array[middle] == searching_for)
+    {
+      found = true;
+      position = middle;
+    }
+    // If searching_for is in lower half
+    else if (array[middle] > searching_for)
+    {
+      last = middle - 1;
+    }
+    // If searching_for is in upper half
+    else
+    {
+      first = middle + 1;
+    }
+  }
+
+  return position;
 }
 
 // Your new sort algorithm cannot be selection sort, because it is provided here.
