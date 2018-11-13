@@ -21,5 +21,5 @@ public:
 
 main()
 {
-  double money[25];
+  cout << (123 % 7 ? "Yes" : "No");
 }
