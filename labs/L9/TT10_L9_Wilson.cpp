@@ -90,7 +90,7 @@ void selectionSortDescribedShowProgress(int[], int);
 void selectionSortConcise(int[], int);
 
 void bubble_sort(int[], int);
-void quick_sort(int[], int, int);
+void insertion_sort(int[], int);
 
 bool linearSearchArray(int[], int, int, int &);
 bool binary_search(const int[], int, int, int &);
@@ -194,12 +194,10 @@ void testAlgorithms(int array[], int arraySize)
     cout << setw(DurationWidth) << right << testSortAlgorithm(bubble_sort, array, testSizes[testCount]);
 
   // Add a loop to call and test your second sort algorithm here
-  int first_index = 0;
-
   cout << endl
-       << setw(AlgorithmNameWidth) << left << "quick sort";
+       << setw(AlgorithmNameWidth) << left << "insertion sort";
   for (int testCount = 0; (testSizes[testCount] && testSizes[testCount] <= arraySize); ++testCount)
-    cout << setw(DurationWidth) << right << test_quck_sort(quick_sort, array, first_index, testSizes[testCount]);
+    cout << setw(DurationWidth) << right << testSortAlgorithm(insertion_sort, array, testSizes[testCount]);
 
   cout << endl
        << setw(AlgorithmNameWidth) << left << "linear search";
@@ -232,19 +230,19 @@ int main()
 
   // When first implementing your algorithm, you may want to test it
   // on a very small array. If so, uncomment the lines below.
-  const int SMALLSIZE = 6;
-  int smallArray[SMALLSIZE] = {5, 7, 2, 8, 9, 1}; // for testing purposes
+  // const int SMALLSIZE = 6;
+  // int smallArray[SMALLSIZE] = {5, 7, 2, 8, 9, 1}; // for testing purposes
 
-  cout << "Optional testing of specific algorithms, prior to performance comparison table:\n\n";
-  cout << "UNSORTED smallArray is: ";
-  showArray(smallArray, SMALLSIZE);
-  if (!verifySorted(smallArray, SMALLSIZE))
-    cout << "Note: smallArray not sorted.\n";
-  selectionSortDescribedShowProgress(smallArray, SMALLSIZE);
-  cout << "SORTED   smallArray is: ";
-  showArray(smallArray, SMALLSIZE);
-  if (verifySorted(smallArray, SMALLSIZE))
-    cout << "Note: smallArray is sorted.\n";
+  // cout << "Optional testing of specific algorithms, prior to performance comparison table:\n\n";
+  // cout << "UNSORTED smallArray is: ";
+  // showArray(smallArray, SMALLSIZE);
+  // if (!verifySorted(smallArray, SMALLSIZE))
+  //   cout << "Note: smallArray not sorted.\n";
+  // selectionSortDescribedShowProgress(smallArray, SMALLSIZE);
+  // cout << "SORTED   smallArray is: ";
+  // showArray(smallArray, SMALLSIZE);
+  // if (verifySorted(smallArray, SMALLSIZE))
+  //   cout << "Note: smallArray is sorted.\n";
 
   // When first implementing your algorithm, you may want to test it
   // on a very small array. If so, try it on smallArray below.
@@ -272,12 +270,6 @@ int main()
   // system("pause");  // optional, commented out
   return 0;
 } // end of main
-
-//////////////////////////////////////////////
-// Add your first sort algorithm in here
-// Add your second sort algorithm in here
-// Add your search algorithm in here
-//////////////////////////////////////////////
 
 void showArray(int array[], int size)
 {
@@ -364,47 +356,16 @@ void insertion_sort(int array[], int size_of_array)
   {
     insertion_subscript = sorted_length;
 
+    // checks if insertion_subscript is valid and if the number below in the sorted section needs to be swapped
     while (insertion_subscript > 0 && array[insertion_subscript - 1] > array[insertion_subscript])
     {
+      // performs a swap and decrements
       temp = array[insertion_subscript];
       array[insertion_subscript] = array[insertion_subscript - 1];
       array[insertion_subscript - 1] = temp;
       insertion_subscript--;
     }
   }
-}
-
-void quick_sort(int array[], int left, int right)
-{
-  int copy_left = left, copy_right = right;
-  int temp;
-  // Using the average of the first and last element of the partition as the pivot
-  int pivot = array[(left + right) / 2];
-
-  // partition
-  while (copy_left <= copy_right)
-  {
-    while (array[copy_left] < pivot)
-      copy_left++;
-
-    while (array[copy_right] > pivot)
-      copy_right--;
-
-    if (left <= right)
-    {
-      temp = array[copy_left];
-      array[copy_left] = array[copy_right];
-      array[copy_right] = temp;
-      copy_left++;
-      copy_right--;
-    }
-  };
-
-  // recursion
-  if (left < copy_left)
-    quick_sort(array, left, copy_right);
-  if (copy_right < right)
-    quick_sort(array, copy_right, right);
 }
 
 // Your new sort algorithm cannot be selection sort, because it is provided here.
@@ -520,39 +481,15 @@ void selectionSortConcise(int array[], int size)
 }
 
 /*
-Optional testing of specific algorithms, prior to performance comparison table:
 
-UNSORTED smallArray is:  5  7  2  8  9  1
-Note: smallArray not sorted.
-  previous min value: 5 at offset: 0; found smaller value: 2 at offset: 2
-  previous min value: 2 at offset: 2; found smaller value: 1 at offset: 5
-  swapped the previous minimum value: 5 with with new minimum value: 1
-After pass 0 the array looks like this:  1  7  2  8  9  5
-
-  previous min value: 7 at offset: 1; found smaller value: 2 at offset: 2
-  swapped the previous minimum value: 7 with with new minimum value: 2
-After pass 1 the array looks like this:  1  2  7  8  9  5
-
-  previous min value: 7 at offset: 2; found smaller value: 5 at offset: 5
-  swapped the previous minimum value: 7 with with new minimum value: 5
-After pass 2 the array looks like this:  1  2  5  8  9  7
-
-  previous min value: 8 at offset: 3; found smaller value: 7 at offset: 5
-  swapped the previous minimum value: 8 with with new minimum value: 7
-After pass 3 the array looks like this:  1  2  5  7  9  8
-
-  previous min value: 9 at offset: 4; found smaller value: 8 at offset: 5
-  swapped the previous minimum value: 9 with with new minimum value: 8
-After pass 4 the array looks like this:  1  2  5  7  8  9
-
-SORTED   smallArray is:  1  2  5  7  8  9
-Note: smallArray is sorted.
-
-Selection sort on bigArray took: 3264.00 milliseconds.
-Linear search  of bigArray took:    0.13 milliseconds.
+Selection sort on bigArray took: 3070911.00 milliseconds.
+Linear search  of bigArray took:  124.21 milliseconds.
 
 Algorithm             1000      5000     10000     20000     30000     40000     50000
 ================   =======   =======   =======   =======   =======   =======   =======
-selection sort        2.00     33.00    131.00    523.00   1174.00   2088.00   3257.00
-linear search         0.00      0.01      0.03      0.05      0.08      0.10      0.13
+selection sort     1298.00  31508.00 122123.00 489035.001104492.002001819.003087604.00
+bubble sort        1995.00  57003.00 272123.001126171.002528471.004583228.007217635.00
+insertion sort     1103.00  26757.00  99797.00 395922.00 898655.001586914.002547904.00
+linear search         2.49     12.30     24.75     49.07     74.77     96.30    120.23
+binary search         0.11      0.07      0.09      0.11      0.08      0.08      0.11
 */
