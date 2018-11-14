@@ -89,7 +89,11 @@ void selectionSortDescribed(int[], int);
 void selectionSortDescribedShowProgress(int[], int);
 void selectionSortConcise(int[], int);
 
+void bubble_sort(int[], int);
+void quick_sort(int[], int, int);
+
 bool linearSearchArray(int[], int, int, int &);
+bool binary_search(const int[], int, int, int &);
 
 const int testSizes[] = {1000, 5000, 10000, 20000, 30000, 40000, 50000, 0};
 
@@ -116,6 +120,26 @@ float testSortAlgorithm(void sortAlgorithm(int[], int), int array[], int arraySi
   return duration;
 }
 
+// virtually identical to above except the function point has one more parameter
+float test_quck_sort(void sortAlgorithm(int[], int, int), int array[], int left, int arraySize)
+{
+  // This is an interesting function. The first parameter is a "function pointer",
+  // It accepts any function that returns a void and has parameters of type: (int [], int)
+  // So, the first parameter (in the caller) can be the name of the sort function being tested.
+  // This reduces redundant code, because the same sequence of tests are performed on each
+  // sort function. (Our textbook does not mention function pointers.)
+  // fill the array with random, unsorted numbers before sorting it
+  for (int index = 0; index < arraySize; index++)
+    array[index] = rand();               // initialize array with random values
+  int startTime = clock();               // start the test clock
+  sortAlgorithm(array, left, arraySize); // ALGORITHM UNDER TEST
+  int stopTime = clock();                // stop the test clock
+  float duration = stopTime - startTime;
+  if (!verifySorted(array, arraySize))
+    cout << "Error! array not sorted!!!\n";
+  return duration;
+}
+
 // Copy and/or reuse this code as desired to test your search algorithms.
 float testLinearSearch(int array[], int arraySize)
 {
@@ -124,6 +148,18 @@ float testLinearSearch(int array[], int arraySize)
   int startTime = clock();
   for (int repeat = 0; repeat < 1000; repeat++)                   // repeat test 1000 times to increase duration
     found = linearSearchArray(array, arraySize, TARGET, foundAt); // ALGORITHM UNDER TEST
+  int stopTime = clock();
+  int duration = stopTime - startTime;
+  return duration / 1000.0; // divide duration by 1000 to get time for single search
+}
+
+float test_binary_search(int array[], int arraySize)
+{
+  bool found = false; // true if TARGET is found in array
+  int foundAt = 0;    // index in array where TARGET was found
+  int startTime = clock();
+  for (int repeat = 0; repeat < 1000; repeat++)               // repeat test 1000 times to increase duration
+    found = binary_search(array, arraySize, TARGET, foundAt); // ALGORITHM UNDER TEST
   int stopTime = clock();
   int duration = stopTime - startTime;
   return duration / 1000.0; // divide duration by 1000 to get time for single search
@@ -151,15 +187,31 @@ void testAlgorithms(int array[], int arraySize)
   // the function testSortAlgorithm. You can do the same thing for your sort algorithms, as long
   // as your sort algorithms return a void and have parameters: (int array[], int size).
 
+  // Add a loop to call and test your first sort algorithm here
+  cout << endl
+       << setw(AlgorithmNameWidth) << left << "bubble sort";
+  for (int testCount = 0; (testSizes[testCount] && testSizes[testCount] <= arraySize); ++testCount)
+    cout << setw(DurationWidth) << right << testSortAlgorithm(bubble_sort, array, testSizes[testCount]);
+
+  // Add a loop to call and test your second sort algorithm here
+  int first_index = 0;
+
+  cout << endl
+       << setw(AlgorithmNameWidth) << left << "quick sort";
+  for (int testCount = 0; (testSizes[testCount] && testSizes[testCount] <= arraySize); ++testCount)
+    cout << setw(DurationWidth) << right << test_quck_sort(quick_sort, array, first_index, testSizes[testCount]);
+
   cout << endl
        << setw(AlgorithmNameWidth) << left << "linear search";
   for (int testCount = 0; (testSizes[testCount] && testSizes[testCount] <= arraySize); ++testCount)
     cout << setw(DurationWidth) << right << testLinearSearch(array, testSizes[testCount]);
-  cout << endl;
 
-  // Add a loop to call and test your first sort algorithm here
-  // Add a loop to call and test your second sort algorithm here
   // Add a loop to call and test your search algorithm here
+  cout << endl
+       << setw(AlgorithmNameWidth) << left << "binary search";
+  for (int testCount = 0; (testSizes[testCount] && testSizes[testCount] <= arraySize); ++testCount)
+    cout << setw(DurationWidth) << right << test_binary_search(array, testSizes[testCount]);
+  cout << endl;
 }
 
 // Useful test to verify that array is really sorted!
@@ -248,7 +300,7 @@ bool linearSearchArray(int a[], int s, int t, int &p)
   return false;
 }
 
-int binary_search(const int array[], int size_of_array, int searching_for)
+bool binary_search(const int array[], int size_of_array, int searching_for, int &at_index)
 {
   int first{0},
       last = size_of_array - 1,
@@ -262,8 +314,8 @@ int binary_search(const int array[], int size_of_array, int searching_for)
 
     if (array[middle] == searching_for)
     {
-      found = true;
-      position = middle;
+      at_index = middle;
+      return true;
     }
     // If searching_for is in lower half
     else if (array[middle] > searching_for)
@@ -276,8 +328,83 @@ int binary_search(const int array[], int size_of_array, int searching_for)
       first = middle + 1;
     }
   }
+}
 
-  return position;
+void bubble_sort(int array[], int size_of_array)
+{
+  bool swapped = true;
+  int passes_made = 0;
+  int temp;
+
+  // Keeps running until no swaps are made on a pass
+  while (swapped)
+  {
+    swapped = false;
+    passes_made++;
+
+    for (int i = 0; i < size_of_array - passes_made; i++)
+    {
+      // if two items need to be swapped; do it
+      if (array[i] > array[i + 1])
+      {
+        temp = array[i];
+        array[i] = array[i + 1];
+        array[i + 1] = temp;
+        swapped = true;
+      }
+    }
+  }
+}
+
+void insertion_sort(int array[], int size_of_array)
+{
+  int sorted_length, insertion_subscript, temp;
+
+  for (sorted_length = 1; sorted_length < size_of_array; sorted_length++)
+  {
+    insertion_subscript = sorted_length;
+
+    while (insertion_subscript > 0 && array[insertion_subscript - 1] > array[insertion_subscript])
+    {
+      temp = array[insertion_subscript];
+      array[insertion_subscript] = array[insertion_subscript - 1];
+      array[insertion_subscript - 1] = temp;
+      insertion_subscript--;
+    }
+  }
+}
+
+void quick_sort(int array[], int left, int right)
+{
+  int copy_left = left, copy_right = right;
+  int temp;
+  // Using the average of the first and last element of the partition as the pivot
+  int pivot = array[(left + right) / 2];
+
+  // partition
+  while (copy_left <= copy_right)
+  {
+    while (array[copy_left] < pivot)
+      copy_left++;
+
+    while (array[copy_right] > pivot)
+      copy_right--;
+
+    if (left <= right)
+    {
+      temp = array[copy_left];
+      array[copy_left] = array[copy_right];
+      array[copy_right] = temp;
+      copy_left++;
+      copy_right--;
+    }
+  };
+
+  // recursion
+  if (left < copy_left)
+    quick_sort(array, left, copy_right);
+  if (copy_right < right)
+    quick_sort(array, copy_right, right);
 }
 
 // Your new sort algorithm cannot be selection sort, because it is provided here.
