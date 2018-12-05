@@ -1,10 +1,9 @@
 /*
-  Author:
+  Author:          Chandler Wilson
   Assignment:      Lab 10
   Topic:           memory diagram with stack, heap structures
-  File Name:
+  File Name:       TT10_L10_Wilson.cpp
   Course/Section:  COSC 1337
-  Due Date:        See syllabus or blackboard
   Instructor:      Thayer
 */
 
@@ -117,18 +116,73 @@ int main()
   cout << "The contents of *p_size is: " << *p_size << endl;
 
   // Start amount
-
-  /* Output comments, formats results, use as desired.
-  cout << "The contents of *p_PI is:    " << *p_PI << endl;
+  int *p_amount = new int{1234};
+  cout << endl;
+  show_address_value(p_amount, 8);
   cout << "The contents of *p_amount is: " << (dec) << *p_amount << endl;
+  delete p_amount;
   cout << "After delete, the contents of p_amount is: " << p_amount << endl;
+  p_amount = nullptr;
   cout << "After reset to nullptr, the contents of p_amount is: " << p_amount << endl;
-  cout << "After delete [], the contents of pArray is: " << pArray << endl;
+
+  // Start pArray
+  int *pArray = new int[3];
+  pArray[0] = 11;
+  pArray[1] = 22;
+  pArray[2] = 33;
+
+  cout << endl;
+  show_address_value(pArray, 8);
+  show_address_value(pArray[0], 8);
+  show_address_value(pArray[1], 8);
+  show_address_value(pArray[2], 8);
+
+  delete[] pArray;
+  cout << "After delete, the contents of pArray is: " << pArray << endl;
+  pArray = nullptr;
   cout << "After reset to nullptr, the contents of pArray is: " << pArray << endl;
-  cout<<"stack allocation (uses: Person wizard):\n";
-  cout<<"heap allocation (uses: personList, Person(\"Harry\"), Person(\"Sally\"):\n";
-  cout << "  <follow link to next Person on personList>\n";
-  */
+
+  // Start emptyList
+  Person *emptyList = nullptr;
+
+  cout << endl;
+  show_address_value(emptyList, 8);
+
+  // Start wizard
+  Person wizard;
+  wizard.name = "Gandalf";
+  wizard.next = nullptr;
+
+  cout << endl
+       << "stack allocation (uses: Person wizard):\n";
+  show_address(wizard, 8);
+  show_address_value(wizard.name, 8);
+  show_address_value(wizard.next, 8);
+
+  // Start personList
+  Person *personList = new Person;
+  personList->name = "Harry";
+  personList->next = new Person;
+  personList->next->name = "Sally";
+  personList->next->next = nullptr;
+
+  cout << endl
+       << "heap allocation (uses: personList, Person(\"Harry\"), Person(\"Sally\"):\n";
+  show_address_value(personList, 8);
+  show_address_value(personList->name, 8);
+  show_address_value(personList->next, 8);
+  cout << "  <follow link to next Person on personList>" << endl;
+  show_address_value(personList->next->name, 8);
+  show_address_value(personList->next->next, 8);
+
+  delete personList->next;
+  cout << "After delete, the contents of personList->next is: " << personList->next << endl;
+  personList->next = nullptr;
+  cout << "After reset to nullptr, the contents of personList->next is: " << personList->next << endl;
+  delete personList;
+  cout << "After delete, the contents of personList is: " << personList << endl;
+  personList = nullptr;
+  cout << "After reset to nullptr, the contents of personList is: " << personList << endl;
 
   return 0;
 } // end of main
@@ -136,7 +190,47 @@ int main()
 /*
 Output from Lab10 memory diagram on pointers:
 
-address of price    is: &0x22fe1c  contents of price    is: 19.95
-address of p_price  is: &0x22fe10  contents of p_price  is: 0x22fe1c
+address of price    is: &0x7ffc7b59c590  contents of price    is: 19.95
+address of p_price  is: &0x7ffc7b59c598  contents of p_price  is: 0x7ffc7b59c590
 The contents of *p_price is: 19.95
+
+address of PI       is: &0x7ffc7b59c5a0  contents of PI       is: 3.14159
+address of PI_div_2 is: &0x7ffc7b59c5a8  contents of PI_div_2 is: 1.5708
+address of p_PI     is: &0x7ffc7b59c5b0  contents of p_PI     is: 0x7ffc7b59c5a0
+The contents of *p_PI is:    3.14159
+
+address of maxSize  is: &0x7ffc7b59c594  contents of maxSize  is: 5028
+address of p_size   is: &0x7ffc7b59c5b8  contents of p_size   is: 0x7ffc7b59c594
+The contents of *p_size is: 5028
+
+address of p_amount is: &0x7ffc7b59c5c0  contents of p_amount is: 0x5653fd565280
+The contents of *p_amount is: 1234
+After delete, the contents of p_amount is: 0x5653fd565280
+After reset to nullptr, the contents of p_amount is: 0
+
+address of pArray   is: &0x7ffc7b59c5c8  contents of pArray   is: 0x5653fd565280
+address of pArray[0] is: &0x5653fd565280  contents of pArray[0] is: 11
+address of pArray[1] is: &0x5653fd565284  contents of pArray[1] is: 22
+address of pArray[2] is: &0x5653fd565288  contents of pArray[2] is: 33
+After delete, the contents of pArray is: 0x5653fd565280
+After reset to nullptr, the contents of pArray is: 0
+
+address of emptyList is: &0x7ffc7b59c5d0  contents of emptyList is: 0
+
+stack allocation (uses: Person wizard):
+address of wizard   is: &0x7ffc7b59c5e0
+address of wizard.name is: &0x7ffc7b59c5e0  contents of wizard.name is: Gandalf
+address of wizard.next is: &0x7ffc7b59c600  contents of wizard.next is: 0
+
+heap allocation (uses: personList, Person("Harry"), Person("Sally"):
+address of personList is: &0x7ffc7b59c5d8  contents of personList is: 0x5653fd5652a0
+address of personList->name is: &0x5653fd5652a0  contents of personList->name is: Harry
+address of personList->next is: &0x5653fd5652c0  contents of personList->next is: 0x5653fd5652d0
+  <follow link to next Person on personList>
+address of personList->next->name is: &0x5653fd5652d0  contents of personList->next->name is: Sally
+address of personList->next->next is: &0x5653fd5652f0  contents of personList->next->next is: 0
+After delete, the contents of personList->next is: 0x5653fd5652d0
+After reset to nullptr, the contents of personList->next is: 0
+After delete, the contents of personList is: 0x5653fd5652a0
+After reset to nullptr, the contents of personList is: 0
 */
