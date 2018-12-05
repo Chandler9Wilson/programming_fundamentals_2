@@ -74,23 +74,49 @@ public:
 
 // Helpful macros to make it easier to output name, address, and value of a variable
 // You may use these, or write your own function that does something similar
-#define show_addr_value(var, width)                                                \
+#define show_address_value(var, width)                                             \
   cout << "address of " << setw(width) << left << #var << " is: &" << &var << "  " \
        << "contents of " << setw(width) << left << #var << " is: " << var << endl;
 
-#define show_addr(var, width) \
+#define show_address(var, width) \
   cout << "address of " << setw(width) << left << #var << " is: &" << &var << endl;
 
 int main()
 {
   cout << "Output from Lab10 memory diagram on pointers:\n\n";
 
-  float price = 0;
+  float price{0};
   float *p_price = &price;
   *p_price = 19.95;
-  show_addr_value(price, 8);
-  show_addr_value(p_price, 8);
+
+  show_address_value(price, 8);
+  show_address_value(p_price, 8);
   cout << "The contents of *p_price is: " << *p_price << endl;
+
+  // Start PI
+  double PI{0};
+  double PI_div_2{0};
+  double *p_PI = &PI;
+  *p_PI = 3.141592;
+  PI_div_2 = *p_PI / 2;
+
+  cout << endl;
+  show_address_value(PI, 8);
+  show_address_value(PI_div_2, 8);
+  show_address_value(p_PI, 8);
+  cout << "The contents of *p_PI is:    " << *p_PI << endl;
+
+  // Start size
+  int maxSize{0};
+  int *p_size = &maxSize;
+  *p_size = 5028;
+  cout << endl;
+
+  show_address_value(maxSize, 8);
+  show_address_value(p_size, 8);
+  cout << "The contents of *p_size is: " << *p_size << endl;
+
+  // Start amount
 
   /* Output comments, formats results, use as desired.
   cout << "The contents of *p_PI is:    " << *p_PI << endl;
