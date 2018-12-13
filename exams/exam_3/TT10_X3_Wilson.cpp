@@ -246,23 +246,72 @@ void double_arrow_iterative(int n)
 // Put your new recursive versions for step 4 here...
 void line_recursive(int n)
 {
-  // fill this in with recursive code for line
+  if (n > 1)
+  {
+    // print out 1 line and call itself with n-1
+    cout << "-";
+    line_recursive(n - 1);
+  }
+  else
+  {
+    cout << "-";
+  }
 }
 
-void left_arrow_recursive(int n)
+void left_arrow_recursive(int n, bool first_call = true)
 {
-  // fill this in with recursive code for left_arrow
+  if (first_call)
+  {
+    cout << "<";
+  }
+
+  if (n > 1)
+  {
+    cout << "-";
+    left_arrow_recursive(n - 1, false);
+  }
+
+  else
+  {
+    cout << "-";
+  }
 }
 
 void right_arrow_recursive(int n)
 {
-  // fill this in with recursive code for right_arrow
+  if (n > 1)
+  {
+    // print out 1 line and call itself with n-1
+    cout << "-";
+    right_arrow_recursive(n - 1);
+  }
+  else
+  {
+    cout << "-"
+         << ">";
+  }
 }
 
-void double_arrow_recursive(int n)
+void double_arrow_recursive(int n, bool first_call = true)
 {
   // This one is a challenge. Hint: add another parameter
   // fill this in with recursive code for double_arrow
+  if (first_call)
+  {
+    cout << "<";
+  }
+
+  if (n > 1)
+  {
+    cout << "-";
+    double_arrow_recursive(n - 1, false);
+  }
+
+  else
+  {
+    cout << "-"
+         << ">";
+  }
 }
 
 void step4()
@@ -353,5 +402,47 @@ n= 5:
 */
 
 /* Paste your test output here:
+Step 1:
+Contents of vector warehouse, already loaded:
+         hat       8   china     6
+     t-shirt      15     usa    14
+  coffee mug     6.5  canada    22
+   candy bar    0.79  mexico     3
+               34.59   japan   122
+ mixing bowl    4.99  brazil    20
 
+hat is $8.00
+t-shirt is $15.00
+coffee mug is $6.50
+generic is $1.00
+generic is $1.00
+mixing bowl is $4.99
+
+Step 2:
+black umbrella is at address 0x62fec8
+black umbrella is $19.95
+
+Step 3:
+a=6.00
+b=3.00
+e=42.00
+
+2.00 4.00 6.00 8.00 10.00
+
+Step 4:
+Test provided iterative versions of line, left_arrow, right_arrow, double_arrow:
+n= 1:- <- -> <->
+n= 2:-- <-- --> <-->
+n= 3:--- <--- ---> <--->
+n= 4:---- <---- ----> <---->
+n= 5:----- <----- -----> <----->
+
+Test student's new recursive versions of line, left_arrow, right_arrow, double_arrow:
+n= 1:- <- -> <->
+n= 2:-- <-- --> <-->
+n= 3:--- <--- ---> <--->
+n= 4:---- <---- ----> <---->
+n= 5:----- <----- -----> <----->
+
+...end.
 */
