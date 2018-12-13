@@ -1,0 +1,50 @@
+For the Chapter 11 lab, combine two of the Programming Challenges at the end of Chapter 11: 2) Day of the Year; and 3) Day of the Year Modification, both on page 768 (7ed), page 786 (8ed), or page 810 (9ed). Do both of these labs in one program. The textbook says: “write a class named DayOfYear”; however, I suggest class Day, because it is less typing. In my discussion below, I refer to class Day, which is my name for the textbook’s class DayOfYear. Design your class to avoid stale data. Re-read page 400 (7ed) or page 422 (8ed and 9ed) in the textbook: "Avoiding Stale Data". Robust, dependable code will avoid the possibility of redundant, out-of-sync data. Hint: one value is all you need to store the day of the year for the class.
+
+2) Day of the Year. Use this year: 2018 as your year. I recommend you do NOT keep track of the year; you can assume 2018 for all dates. The months of 2018 have the following days: Jan=31; Feb=28; Mar=31; Apr=30; May=31; Jun=30; Jul=31; Aug=31; Sep=30; Oct=31; Nov=30; Dec=31. One way to translate an integer dayOfYear into a month and day is to provide an array daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; In a loop, you can reduce the int dayOfYear by month, until you have month number and day number. Also useful is an array: string monthsOfYear[12]; This can be initialized to: {"jan", "feb", "mar", "apr", "may",  "jun", "jul", "aug", "sep",  "oct", "nov", "dec"}; An enum type, such as: enum month_t {jan, feb, mar, …} can make your code more self-documenting. To save time, it is fine to use 3 letters for the month, although you could use full month names if you like. You can avoid uppercase, lowercase when searching for the month for greater flexibility.
+
+Use static member variables to store data common to all instances. The daysInMonth array and monthsOfYear array are common to all instances of class Day. You cannot initialize static data in the declaration of a class. Initialize static data AFTER the declaration of the class, but BEFORE any instances of the class are created. See program 11-3 as an example of a program that uses static data. Use "const static" for data which is constant and static. These arrays should be public and static, so callers of methods in Day can use them. They can be accessed using the scope resolution operator, as in: Day:: . Because they are const, outside users cannot mess them up. If you want to include t he current year, it could be a const static int.
+
+C++11/14 syntax allows you to initialize data members when you declare them in your class. This is not available in earlier compilers.
+
+You can use one of the Day constructors like this:
+Day halfway(365/2); // creates an instance of class Day, called halfway, initialized to the day number 182
+halfway.print(); // displays the day in “Month, dd” format. This will output something like: "Jun 30".
+
+3) Day of the Year Modification. Expand on #2) above. Add a constructor that accepts a string for the month and the day of the month. Also write four overloaded operators (++day, --day, day++, day--) so day of year can be incremented and decremented (may jump to the next or previous month).  Testing example:
+Day cincoDeMayo("May", 5); // creates a day, which is initialized to the number of the day, May 5th.
+Day restDay = ++cincoDeMayo // increment to next day
+restDay.print(); // displays: "May 6"
+
+See program 11-11 for code that overloads operator++, operator--.
+CAUTION! Do not allow your day_of_year to become invalid! Day of the year outside of the range 1-365 are not valid! Decrementing day=1 should not allow day 0, -1, -2, -3, ... What to do? Wrap to the previous / next year.
+
+For testing: Provide a menu-driving testing loop in main(). Allow the user to test various numeric days of the year OR month, day. Verify that valid data is accepted (day number 1 to 365; months Jan to Dec and correct day limit for that month). Test all constructors, operators, getters, setters in class Day.
+
+Invalid data should be rejected by the constructors. If invalid data is detected in a constructor, it is common to “throw an exception”, which can exit the program. We don’t cover error-handling with exceptions (a big topic) in this class. To deal with invalid day (invalid month, day combination), set the day to some valid default. This could be simple, like January 1, or more intelligent, such as setting it to the closest valid date: Feb 31 becomes Feb 28; Jan -5 becomes Jan 1;Juniper, 345 can become: Jan 1.
+
+Test the four operators (++day, --day, day++, day--) by showing the previous five days and the following five days in expanded format. Example:
+
+
+void test_operators() {
+
+  Day bday("jul", 4);
+
+  cout<<"start at: "; bday.print(); cout<<endl;
+
+  for (int i=0; i<5; ++i) {cout<<" "; (--bday).print();} cout<<endl;
+
+  for (int i=0; i<5; ++i) {cout<<" "; (++bday).print();} cout<<endl;
+
+  for (int i=0; i<5; ++i) {cout<<" "; (bday++).print();} cout<<endl;
+
+  for (int i=0; i<5; ++i) {cout<<" "; (bday--).print();} cout<<endl;
+
+  cout<<"end at: "; bday.print(); cout<<endl;
+
+}
+
+Extra credit: (5%): Overload the << operator so when the class is sent to cout (ostream) it prints out the date in expanded format. Example:
+cout << cincoDeMayo; // prints out: "May 5"
+Can use cout << testDay; as well as: testDay.print();  This makes it easier to output a Day. See code on page 719 (7ed) or page 737 (8ed) or page 745 (9ed).
+
+See the attached file: Lab11_test_output_sample.txt for ideas on how to test your code. If you don’t have time to handle multiple possibilities (such as: month name uppercase, lower-case, abbreviated, etc.) that is OK – just state your assumptions in comments in the code.
